@@ -24,7 +24,14 @@ class PostController extends Controller
 
     public function index(Request $request){
         if ($request->ajax()){
-            $data = getModelData( model: new Post(),relations :  [ 'user' => ['id','username'] ]   );
+            if($request->user_id){
+                $andsFilters = [
+                    ['user_id', $request->user_id]
+                ];
+            }else{
+                $andsFilters=[];
+            }
+            $data = getModelData( model: new Post(),relations :  [ 'user' => ['id','username'] ] , andsFilters:  $andsFilters );
             return response()->json($data);
         }
         return view('dashboard.posts.index');

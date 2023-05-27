@@ -88,6 +88,7 @@
                     <th>name</th>
                     <th>phone</th>
                     <th>email</th>
+                    <th>Posts</th>
                     <th>created date</th>
                     <th class="min-w-100px">actions</th>
                 </tr>

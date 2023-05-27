@@ -18,7 +18,7 @@ var KTDatatablesServerSide = function () {
                 className: 'row-selected'
             },
             ajax: {
-                url: `/dashboard/admins`,
+                url: window.location.href,
             },
             columns: [
                 { data: 'id' },

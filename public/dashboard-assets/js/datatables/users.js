@@ -18,17 +18,25 @@ var KTDatatablesServerSide = function () {
                 className: 'row-selected'
             },
             ajax: {
-                url: `/dashboard/users`,
+                url: window.location.href,
             },
             columns: [
                 { data: 'id' },
                 { data: 'username' },
                 { data: 'mobile_number' },
                 { data: 'email' },
+                { data: null },
                 { data: 'created_at' },
                 { data: null },
             ],
             columnDefs: [
+                {
+                    targets: 4,
+                    data:null,
+                    render: function (data,type,row){
+                        return `<a href="/dashboard/posts/?user_id=${row.id}" target="_blank" >Posts List</a>`
+                    }
+                },
                 {
                     targets: -1,
                     data: null,
