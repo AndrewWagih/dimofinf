@@ -14,5 +14,6 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
     Route::get('/' , 'DashboardController@index')->name('index');
     Route::resource('admins','AdminController');
     Route::resource('users','UserController');
+    Route::resource('posts','PostController');
 
 });

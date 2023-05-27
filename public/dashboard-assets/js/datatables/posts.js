@@ -3,7 +3,7 @@
 var datatable;
 // Class definition
 var KTDatatablesServerSide = function () {
-    let dbTable = 'users';
+    let dbTable = 'posts';
     // Private functions
     var initDatatable = function () {
         datatable = $("#kt_datatable").DataTable({
@@ -18,17 +18,25 @@ var KTDatatablesServerSide = function () {
                 className: 'row-selected'
             },
             ajax: {
-                url: `/dashboard/users`,
+                url: `/dashboard/posts`,
             },
             columns: [
                 { data: 'id' },
-                { data: 'username' },
-                { data: 'mobile_number' },
-                { data: 'email' },
+                { data: 'title' },
+                { data: 'description' },
+                { data: 'contact_phone_number' },
+                { data: null},
                 { data: 'created_at' },
                 { data: null },
             ],
             columnDefs: [
+                {
+                    targets: 4,
+                    data:null,
+                    render: function (data,type,row){
+                        return `<a href="/dashboard/users/${row.user.id}/edit" target="_blank" >${row.user.username}</a>`
+                    }
+                },
                 {
                     targets: -1,
                     data: null,
@@ -46,7 +54,7 @@ var KTDatatablesServerSide = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="/dashboard/users/${ row.id }/edit" class="menu-link px-3 d-flex justify-content-between edit-row" >
+                                    <a href="/dashboard/posts/${ row.id }/edit" class="menu-link px-3 d-flex justify-content-between edit-row" >
                                        <span> Edit </span>
                                        <span>  <i class="fa fa-edit text-primary"></i> </span>
                                     </a>
@@ -56,7 +64,7 @@ var KTDatatablesServerSide = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="User">
+                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="Post">
                                        <span> Delete </span>
                                        <span>  <i class="fa fa-trash text-danger"></i> </span>
                                     </a>
@@ -84,6 +92,16 @@ var KTDatatablesServerSide = function () {
             KTMenu.createInstances();
         });
     }
+
+    let handleSearchDatatable = () => {
+
+        $('#general-search-inp').keyup( function () {
+            datatable.search( $(this).val() ).draw();
+        });
+
+    }
+
+    // Delete record
     let handleDeleteRows = () => {
 
         $('.delete-row').click(function () {
@@ -100,7 +118,7 @@ var KTDatatablesServerSide = function () {
                     $.ajax({
                         method: 'delete',
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: '/dashboard/users/' + rowId,
+                        url: '/dashboard/posts/' + rowId,
                         success: () => {
 
                             setTimeout( () => {
@@ -134,15 +152,6 @@ var KTDatatablesServerSide = function () {
             });
         })
     }
-
-    let handleSearchDatatable = () => {
-
-        $('#general-search-inp').keyup( function () {
-            datatable.search( $(this).val() ).draw();
-        });
-
-    }
-
 
     // Public methods
     return {

@@ -9,6 +9,9 @@ class UserService{
         return auth()->user();
     }
 
+    public function all(){
+        return User::get();   
+    }
     public function store($data){
         User::create($data);
         return true;

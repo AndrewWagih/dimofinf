@@ -8,21 +8,31 @@ use App\Http\Services\PostService;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostListResource;
-
+use App\Http\Services\UserService;
 
 class PostController extends Controller
 {
     
     protected $postService;
+    protected $userService;
 
-    public function __construct(PostService $postService)
+    public function __construct(PostService $postService,UserService $userService)
     {
         $this->postService = $postService;
+        $this->userService = $userService;
     }
 
     public function index(Request $request){
-        $post = $this->postService->userPosts($request->all());
-        return $this->successWithPaginate('posts list',PostListResource::collection($post)->response()->getData(true));
+        if ($request->ajax()){
+            $data = getModelData( model: new Post(),relations :  [ 'user' => ['id','username'] ]   );
+            return response()->json($data);
+        }
+        return view('dashboard.posts.index');
+    }
+
+    public function create(){
+        $users = $this->userService->all();
+        return view('dashboard.posts.create',compact('users'));
     }
 
     public function store(PostRequest $request){
@@ -30,17 +40,18 @@ class PostController extends Controller
         return $this->success('Post added successfully');
     }
 
-    public function show(Post $post){
-        return $this->success('Post added successfully');
+    public function edit(Post $post){
+        $users = $this->userService->all();
+        return view('dashboard.posts.edit',compact('post','users'));
     }
 
     public function update(PostRequest $request,Post $post){
         $post = $this->postService->update($request->validated(),$post);
-        return $this->success('Post data',$post);
+        return $this->success('Post updated successfully');
     }
 
     public function destroy(Post $post){
         $post = $this->postService->destroy($post);
-        return $this->success('Post deleted successfully',$post);
+        return $this->success('Post deleted successfully');
     }
 }

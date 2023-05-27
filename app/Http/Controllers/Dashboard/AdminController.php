@@ -43,4 +43,13 @@ class AdminController extends Controller
         $admin = $this->adminService->update($request->validated(),$admin);
         return  $this->success('Admin updated successfully');
     }
+
+    public function destroy(Admin $admin){
+        $admin = $this->adminService->destroy($admin);
+        if($admin){
+            return $this->success('Admin deleted successfully');
+        }else{
+            return $this->failure('something wrong!!',500);
+        }
+    }
 }

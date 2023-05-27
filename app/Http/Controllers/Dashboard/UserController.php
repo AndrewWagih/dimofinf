@@ -53,7 +53,7 @@ class UserController extends Controller
         }
     }
 
-    public function destroy(UserRequest $request,User $user){
+    public function destroy(User $user){
         $user = $this->userService->destroy($user);
         if($user){
             return $this->success('User deleted successfully');

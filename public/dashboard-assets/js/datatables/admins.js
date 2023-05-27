@@ -78,30 +78,69 @@ var KTDatatablesServerSide = function () {
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
             KTMenu.createInstances();
-            initToggleToolbar();
-            toggleToolbars();
-            handleEditRows();
-            deleteRowWithURL(`/dashboard/${dbTable}/`);
-            deleteSelectedRowsWithURL({
-                url: `/dashboard/${dbTable}/delete-selected`,
-                restoreUrl: `/dashboard/${dbTable}/restore-selected`
-            });
+            handleDeleteRows();
+            handleSearchDatatable();
             KTMenu.createInstances();
         });
     }
 
+    // Delete record
+    let handleDeleteRows = () => {
+
+        $('.delete-row').click(function () {
+
+            let rowId = $(this).data('row-id');
+            let type  = $(this).data('type');
+
+            deleteAlert(type).then(function (result) {
+
+                if (result.value) {
+
+                    loadingAlert('deleting now ...');
+
+                    $.ajax({
+                        method: 'delete',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: '/dashboard/admins/' + rowId,
+                        success: () => {
+
+                            setTimeout( () => {
+
+                                successAlert(`You have deleted the ${type} successfully`)
+                                    .then(function () {
+                                        datatable.draw();
+                                    });
+
+                            } , 1000)
+
+
+
+                        },
+                        error: (err) => {
+
+                            if (err.hasOwnProperty('responseJSON')) {
+                                if (err.responseJSON.hasOwnProperty('message')) {
+                                    errorAlert(err.responseJSON.message);
+                                }
+                            }
+                        }
+                    });
+
+
+                } else if (result.dismiss === 'cancel') {
+
+                    errorAlert( 'was not deleted !' )
+
+                }
+            });
+        })
+    }
 
     // Public methods
     return {
         init: function () {
             initDatatable();
             handleSearchDatatable();
-            // initToggleToolbar();
-            deleteRowWithURL(`/dashboard/${dbTable}/`);
-            deleteSelectedRowsWithURL({
-                url: `/dashboard/${dbTable}/delete-selected`,
-                restoreUrl: `/dashboard/${dbTable}/restore-selected`
-            });
         }
     }
 }();

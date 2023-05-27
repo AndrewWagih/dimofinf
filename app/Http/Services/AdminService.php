@@ -13,4 +13,9 @@ class AdminService
         $admin->update($data);
         return true;
     }
+
+    public function destroy($admin){
+        $admin->delete();
+        return  true;
+    }
 }
