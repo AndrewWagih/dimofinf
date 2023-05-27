@@ -7,18 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendDailyReports extends Mailable
+class SendDailyReportsMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $files;
 
     /**
      * Create a new message instance.
      *
+     * @param  array  $files
      * @return void
      */
-    public function __construct()
+    public function __construct($files)
     {
-        //
+        $this->files = $files;
     }
 
     /**
@@ -28,6 +31,9 @@ class SendDailyReports extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        $subject = 'Daily Report';
+
+        return $this->subject($subject)
+            ->view('emails.daily-reports');
     }
 }

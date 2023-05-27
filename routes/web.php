@@ -18,3 +18,10 @@ Route::group(['namespace' => 'Dashboard' ] , function () {
     Route::post('admin/login','AuthController@login')->name('admin.login');
     // Route::post('employee/logout','EmployeeAuthController@logout')->name('employee.logout');
 });
+
+Route::group([ 'prefix' => 'export' , 'namespace' => 'General', 'as' => 'export.' ] , function (){
+
+   Route::get('users-daily-report','ExportController@exportUsers')->name('users.daily-report');
+   Route::get('posts-daily-report','ExportController@exportPosts')->name('posts.daily-report');
+
+});
