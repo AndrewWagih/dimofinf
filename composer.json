@@ -12,7 +12,8 @@
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "rap2hpoutre/fast-excel": "^5.2"
+        "rap2hpoutre/fast-excel": "^5.2",
+        "twilio/sdk": "^7.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

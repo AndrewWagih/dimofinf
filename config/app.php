@@ -52,6 +52,9 @@ return [
     |
     */
 
+    'twilio_sid' => 'AC8168f6dfffdde0e349ed9cbe3c3e923f',
+    'twilio_auth_token' => '7a079978b7dd18bb5136e82968cea5fa',
+
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),

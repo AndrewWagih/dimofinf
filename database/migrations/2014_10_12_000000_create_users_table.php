@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('mobile_number');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('otp')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

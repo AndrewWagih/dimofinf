@@ -1,8 +1,16 @@
 <?php
 namespace App\Http\Services;
 use App\Models\User;
+use App\Http\Services\TwilloService;
 
 class UserAuthService {
+
+    protected $twilloService;
+
+    public function __construct(TwilloService $twilloService)
+    {
+        $this->twilloService = $twilloService;
+    }
 
     public function register($data){
         $user = User::create([
@@ -11,6 +19,7 @@ class UserAuthService {
             'email' => $data['email'],
             'password' => $data['password'],
         ]);
+        $this->twilloService->otp($user);
         $access_token = $user->createToken('User access token')->accessToken;
         return response([
             'success' => true,

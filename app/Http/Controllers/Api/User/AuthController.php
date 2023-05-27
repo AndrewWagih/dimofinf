@@ -17,10 +17,10 @@ class AuthController extends Controller
     }
 
     public function register(UserRequest $request){
-        return $user = $this->userAuthService->register($request->validated());
+        return $this->userAuthService->register($request->validated());
     }
 
     public function login(UserLoginRequest $request){
-        return $user = $this->userAuthService->login($request->validated());
+        return  $this->userAuthService->login($request->validated());
     }
 }
