@@ -33,7 +33,7 @@ class UserAuthService {
                     'user'=>$user ,
                     'access_token' => $access_token
                 ],
-                'message' => 'registered in successfully',
+                'message' => 'sing in successfully',
             ]);
         }else{
             return response(['success' => false,'message' => 'Invalid Credentials.'],401);

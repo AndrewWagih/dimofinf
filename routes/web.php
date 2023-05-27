@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['namespace' => 'Dashboard' ] , function () {
+    Route::get('','AuthController@loginForm')->name('admin.login-form');
+    Route::post('admin/login','AuthController@login')->name('admin.login');
+    // Route::post('employee/logout','EmployeeAuthController@logout')->name('employee.logout');
 });

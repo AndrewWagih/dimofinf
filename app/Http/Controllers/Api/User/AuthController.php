@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
 use Illuminate\Http\Request;
 use App\Http\Services\UserAuthService;
-use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\CreateUserRequest;
 class AuthController extends Controller
 {
     protected $userAuthService;
@@ -16,7 +16,7 @@ class AuthController extends Controller
         $this->userAuthService = $userAuthService;
     }
 
-    public function register(UserRegisterRequest $request){
+    public function register(CreateUserRequest $request){
         return $user = $this->userAuthService->register($request->validated());
     }
 
