@@ -27,11 +27,19 @@
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
 
                 <div class="menu-item">
-                    <a class="menu-link" href=""  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link" href="{{route('dashboard.admins.index')}}"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                     <span class="menu-icon">
                             <i class="fa fa-user-shield"></i>
                     </span>
-                        <span class="menu-title"> Employees</span>
+                        <span class="menu-title"> Admins</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" href="{{route('dashboard.users.index')}}"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <span class="menu-icon">
+                            <i class="fa fa-user-shield"></i>
+                    </span>
+                        <span class="menu-title">Users</span>
                     </a>
                 </div>
             </div>
