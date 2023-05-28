@@ -70,6 +70,8 @@ function onPushing() {
 
         new Notification(noteTitle, noteOptions);
 
+        showToast(data['gcm.notification.alert_title']);
+
         $('.bullet.bullet-dot').removeClass('d-none');
     });
 }

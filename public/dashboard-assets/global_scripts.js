@@ -333,30 +333,5 @@ $(document).ready(function () {
 
 
 
-// document.onreadystatechange = function() {
-//     if (document.readyState === 'complete') {
-//         $('.filter-datatable-inp').on('change',function(){
-//             $('.filter-datatable-inp').attr('disabled',true)
-//             checks();
-//         })
-//         function checks(check=true){
-//             if(check=true){
-//                 if($(`#kt_datatable_processing`).is(":visible")){
-//                     checks(check=true);
-
-//                 }else{
-//                     setTimeout(() => {
-//                     $('.filter-datatable-inp').attr('disabled',false)
-//                     }, 2000);
-//                     return 0;
-//                 }
-//             }
-
-//         }
-
-
-
-//     }
-// }
 
 
