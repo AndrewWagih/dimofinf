@@ -18,6 +18,8 @@ class Admin extends Authenticatable
         'email' ,
         'phone' ,
         'password' ,
+        'device_token',
+        'fcm_mobile_token',
     ];
     public function setPasswordAttribute($value)
     {

@@ -56,3 +56,26 @@
     </div>
     <!--end::Aside menu-->
 </div>
+
+
+@push('scripts')
+    <script>
+
+        $("#toggle-notifications").change(function () {
+
+            let notificationSoundStatus = $(this).is(":checked");
+
+            $.ajax({
+                type: "post",
+                url: "/dashboard/notifications/change-status-sound",
+                data: {
+                    status: notificationSoundStatus
+                },
+                success: function (response) {
+                    showToast(response);
+                    notificationSoundOn = notificationSoundStatus;
+                }
+            });
+        });
+    </script>
+@endpush

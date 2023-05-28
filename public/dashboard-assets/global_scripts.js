@@ -282,6 +282,14 @@ let submitForm = (form) => {
 
 
 
+let showToast = function (message = null) {
+    const toastElement = document.getElementById('kt_docs_toast_toggle');
+    const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+    if(message)
+        $(".toast-body").text(message);
+    toast.show();
+
+}
 
 $(document).ready(function () {
 

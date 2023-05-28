@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use App\Models\Admin;
+use Illuminate\Support\Facades\View;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,6 +27,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('partials.dashboard.header', function ($view) {
+            $unreadNotifications = Admin::first()->unreadNotifications()->get();
+            $allNotifications = Admin::first()->notifications()->get();
+            $view->with(['unreadNotifications' => $unreadNotifications, "allNotifications" => $allNotifications]);
+        });
+
+        View::composer('partials.dashboard.sidebar', function ($view) {
+            $unreadNotifications = Admin::first()->unreadNotifications()->take(5)->get();
+
+            $view->with(['unreadNotifications' => $unreadNotifications]);
+        });
     }
 }

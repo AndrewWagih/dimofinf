@@ -30,6 +30,7 @@ class PostController extends Controller
 
     public function store(PostRequest $request){
         $post = $this->postService->store($request->validated());
+        $this->newUserNotification(auth('api')->user(),route('dashboard.posts.edit',$post->id),'post');
         return $this->success('Post  added successfully',$post);
     }
 

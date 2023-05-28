@@ -19,6 +19,8 @@ class CreateAdminsTable extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('password');
+            $table->string('device_token')->nullable();
+            $table->string('fcm_mobile_token')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Cache;
-
+use App\Notifications\NewNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 
@@ -111,4 +111,36 @@ if ( !function_exists('getModelData') ) {
 
         return $response;
     }
+}
+
+
+function storeAndPushNotification($title, $description, $url){
+    /** add notification to first Admin **/
+    $date = \Carbon\Carbon::now()->diffForHumans();
+    $notification = new NewNotification($title, $description, $date,$url);
+    $admin = Admin::first();
+    $admin->notify($notification);
+
+    /** push notifications to all admins **/
+    $firebaseToken = Admin::whereNotNull('device_token')->pluck('device_token')->all();
+    $SERVER_API_KEY = "AAAA_VGhzmU:APA91bGzau0KL1-qnUsxQs5OjcUa-6oGOoTVTPQb1yKrhRXcsM5AROUgR8_U6SVBi8zex3WqJkTj8DS4CJZUCg553qaArGnojwOHW4gqvWHZD-XY2Yti85Jh4-wk6WO12drTaXI3vycY";
+
+    $data = [
+        "registration_ids" => $firebaseToken,
+        "notification" => [
+            "alert_title" => $title,
+            "title" => $title,
+            "description" => $description,
+            "date" => $date,
+            "icon" => 'https://info.cegedim-healthcare.co.uk/hubfs/CHS_Tasks%20logo.png',
+            "url" => $url,
+            "id" => $admin->notifications->last()->id,
+        ]
+    ];
+
+    $response = Http::withHeaders([
+        "Authorization" => "key=$SERVER_API_KEY",
+    ])->post('https://fcm.googleapis.com/fcm/send', $data);
+
+    return $response;
 }

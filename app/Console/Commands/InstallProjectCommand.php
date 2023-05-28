@@ -41,5 +41,7 @@ class InstallProjectCommand extends Command
         Artisan::call('key:generate');
         Artisan::call('migrate:fresh');
         Artisan::call('db:seed');
+        Artisan::call('passport:install');
+        
     }
 }

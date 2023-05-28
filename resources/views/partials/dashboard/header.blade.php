@@ -165,17 +165,17 @@
                 <!--begin::Notifications-->
                 <div class="d-flex align-items-center ms-1 ms-lg-3">
                     <!--begin::Menu- wrapper-->
-                    {{-- <div class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                    <div class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                         <a href="javascript:" class="btn btn-icon btn-light pulse pulse-primary">
                             <i class="bi bi-bell-fill fs-1"></i>
                             <span class="pulse-ring border-2"></span>
                             <span class="bullet bullet-dot bg-danger position-absolute translate-end top-0 end-0 animation-blink">
-                                <strong class="text-white" id="notification-count">{{unreadNotifications()->count()}}</strong>
+                                <strong class="text-white" id="notification-count">{{$unreadNotifications->count()}}</strong>
                             </span>
                         </a>
                         <!--end::Svg Icon-->
-                    </div> --}}
+                    </div>
                     <!--begin::Menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
                         <!--begin::Heading-->
@@ -187,8 +187,8 @@
                         <!--end::Heading-->
                         <!--begin::Tab content-->
                         
-                        {{-- <div class="tab-content">
-                            <div class="tab-pane fade @if( unreadNotifications()->count() == 0 ) show active @endif " id="no-notifications" role="tabpanel">
+                        <div class="tab-content">
+                            <div class="tab-pane fade @if( $unreadNotifications->count() == 0 ) show active @endif " id="no-notifications" role="tabpanel">
                                 <!--begin::Wrapper-->
                                 <div class="dnotifications/{id}/mark_as_read-flex flex-column px-9">
                                     <!--begin::Section-->
@@ -215,18 +215,18 @@
                         </div>
                         <div class="tab-content">
                             <!--begin::Tab panel-->
-                            <div class="tab-pane fade @if( unreadNotifications()->count() > 0 ) show active @endif " id="notifications-tab" role="tabpanel">
+                            <div class="tab-pane fade @if( $unreadNotifications->count() > 0 ) show active @endif " id="notifications-tab" role="tabpanel">
                                 <!--begin::Items-->
                                 <div class="scroll-y mh-325px my-5 px-8" id="notifications-body" >
-                                    @foreach( unreadNotifications() as $notification )
+                                    @foreach( $unreadNotifications as $notification )
                                     <!--begin::Item-->
-                                    <div class="d-flex flex-stack py-4" onclick="window.location.href='',$notification->id)}}'">
+                                    <div class="d-flex flex-stack py-4" onclick="window.location.href='{{$notification->data['url']}}'">
                                         <!--begin::Section-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Title-->
                                             <div class="mb-0 me-2">
-                                                <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bold">{{$notification->data['title_'.getLocale()]}}</a>
-                                                <div class="text-gray-400 fs-7">{{$notification->data['description_'.getLocale()]}}</div>
+                                                <a href="{{$notification->data['url']}}" class="fs-6 text-gray-800 text-hover-primary fw-bold">{{$notification->data['title']}}</a>
+                                                <div class="text-gray-400 fs-7">{{$notification->data['description']}}</div>
                                             </div>
                                             <!--end::Title-->
                                         </div>
@@ -241,7 +241,7 @@
                                 <!--end::Items-->
                             </div>
                             <!--end::Tab panel-->
-                        </div> --}}
+                        </div>
                         <!--end::Tab content-->
                        
                         
@@ -273,6 +273,15 @@
 </div>
 @push('scripts')
     <script>
+        var favIconCounter = {{ $unreadNotifications->count() }};
+        var favicon;
+
+        $(document).ready(function() {
+        
+
+            KTLayoutSearch.init();
+        });
+
         $(document).ready(() => {
 
             $("#toggle-theme-mode").change( function () {
